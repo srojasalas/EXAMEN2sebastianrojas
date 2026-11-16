@@ -1,0 +1,71 @@
+﻿CREATE DATABASE TallerReparacionesDB;
+GO
+USE TallerReparacionesDB;
+GO
+
+-- Creación de Tablas
+CREATE TABLE Usuarios (
+    UsuarioID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    CorreoElectronico VARCHAR(100) NOT NULL,
+    Telefono VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Tecnicos (
+    TecnicoID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Especialidad VARCHAR(100) NOT NULL
+);
+GO
+
+-- Procedimientos Almacenados: USUARIOS
+CREATE PROCEDURE sp_ConsultarUsuarios
+AS BEGIN SELECT * FROM Usuarios; END
+GO
+
+CREATE PROCEDURE sp_AgregarUsuario
+    @Nombre VARCHAR(100), @Correo VARCHAR(100), @Telefono VARCHAR(20)
+AS BEGIN
+    INSERT INTO Usuarios (Nombre, CorreoElectronico, Telefono) VALUES (@Nombre, @Correo, @Telefono);
+END
+GO
+
+CREATE PROCEDURE sp_ModificarUsuario
+    @ID INT, @Nombre VARCHAR(100), @Correo VARCHAR(100), @Telefono VARCHAR(20)
+AS BEGIN
+    UPDATE Usuarios SET Nombre = @Nombre, CorreoElectronico = @Correo, Telefono = @Telefono WHERE UsuarioID = @ID;
+END
+GO
+
+CREATE PROCEDURE sp_BorrarUsuario
+    @ID INT
+AS BEGIN
+    DELETE FROM Usuarios WHERE UsuarioID = @ID;
+END
+GO
+
+-- Procedimientos Almacenados: TECNICOS
+CREATE PROCEDURE sp_ConsultarTecnicos
+AS BEGIN SELECT * FROM Tecnicos; END
+GO
+
+CREATE PROCEDURE sp_AgregarTecnico
+    @Nombre VARCHAR(100), @Especialidad VARCHAR(100)
+AS BEGIN
+    INSERT INTO Tecnicos (Nombre, Especialidad) VALUES (@Nombre, @Especialidad);
+END
+GO
+
+CREATE PROCEDURE sp_ModificarTecnico
+    @ID INT, @Nombre VARCHAR(100), @Especialidad VARCHAR(100)
+AS BEGIN
+    UPDATE Tecnicos SET Nombre = @Nombre, Especialidad = @Especialidad WHERE TecnicoID = @ID;
+END
+GO
+
+CREATE PROCEDURE sp_BorrarTecnico
+    @ID INT
+AS BEGIN
+    DELETE FROM Tecnicos WHERE TecnicoID = @ID;
+END
+GO
